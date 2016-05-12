@@ -10,7 +10,7 @@ $query = (new \LdapQuery\Builder)->where('attrBar', 'value')
         $builder->where('bla', 'bla2')
             ->orWhere('bla3', 'bla1');
     })
-    ->compile()
+    ->__toString()
 ;
 ```
 
@@ -29,7 +29,7 @@ $query = $builder->where('attrBar', 'value')
     ->andWhere(function($builder) {
         $builder->where('bla', 'bla2')
             ->orWhere('bla3', 'bla1');
-    })->compile();
+    })->__toString();
 
 $builder->prettify(); # will generate a nice output
 ```
@@ -65,9 +65,6 @@ Dillinger requires composer to install
 ```sh
 $ composer require ldapquery/builder dev-master
 ```
-
-### To-Do
-* Add not where clause
 
 ### Development
 
