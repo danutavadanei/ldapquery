@@ -83,7 +83,7 @@ class Filter
 		if ($this->operator !== '<>') {
 			return [$tab . sprintf('(%s%s%s)', $this->attribute, $this->operator, $this->value)];
 		} else {
-			return [$tab . '(!', $tab . $tab . sprintf('(%s=%s)', $this->attribute, $this->value), $tab . ')'];
+			return [$tab . '(!', $tab . '    ' . sprintf('(%s=%s)', $this->attribute, $this->value), $tab . ')'];
 		}
 	}
 }

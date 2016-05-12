@@ -73,6 +73,11 @@ class FilterGroup
 	 */
 	public function push($filter)
 	{
+		if ($filter instanceof FilterGroup) {
+			if (count($filter->getFilters()) === 1) {
+				return $this->push($filter->getFilters()[0]);
+			}
+		}
 		$this->filters[] = $filter;
 	}
 
@@ -84,6 +89,16 @@ class FilterGroup
 	public function getOperator()
 	{
 		return $this->operator;
+	}
+
+	/**
+	 * Return group filters
+	 * 
+	 * @return array
+	 */
+	public function getFilters()
+	{
+		return $this->filters;
 	}
 
 	/**

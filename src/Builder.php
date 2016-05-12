@@ -52,7 +52,13 @@ class Builder
 		// spawn a new group and nest the current one
 		if ($this->group->getOperator() !== $logical){
 			$group = new FilterGroup($logical);
-			$group->push($this->group);
+
+			if (count($group->getFilters()) === 1) {
+				$group->push($this->group->getFilters()[0]);
+			} else {
+				$group->push($this->group);
+			}
+			
 			$this->group = $group;
 		}
 
@@ -73,7 +79,7 @@ class Builder
 				foreach($value as $v) {
 					$builder->where($attribute, $operator, $v, '|');
 				}
-			});
+			}, null, null, $logical);
 		}
 
 		$this->group->push(Filter::create($attribute, $operator, $value));
@@ -91,7 +97,7 @@ class Builder
 	 *
 	 * @throws \LdapQuery\Exceptions\GrammarException
 	 */
-	public function orWhere($attribute, $operator, $value = null)
+	public function orWhere($attribute, $operator = null, $value = null)
 	{
 		return $this->where($attribute, $operator, $value, '|');
 	}
@@ -107,7 +113,7 @@ class Builder
 	 *
 	 * @throws \LdapQuery\Exceptions\GrammarException
 	 */
-	public function andWhere($attribute, $operator, $value = null)
+	public function andWhere($attribute, $operator = null, $value = null)
 	{
 		return $this->where($attribute, $operator, $value, '&');
 	}
