@@ -1,0 +1,32 @@
+{
+    "name": "avadaneidanut/ldapquery",
+    "description": "Easily build LDAP filter queries.",
+    "authors": [
+        {
+            "name": "Avadanei Danut",
+            "email": "danut@worldit.info"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "require-dev": {
+        "psy/psysh": "^0.7.2",
+        "symfony/ldap": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LdapQuery\\": "src/"
+        }
+    },
+    "repositories":[
+        {
+            "packagist": false
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
+    ]
+}

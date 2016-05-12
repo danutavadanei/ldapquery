@@ -1,2 +1,1 @@
-# ldapquerybuilder
-LDAP Query Builder
+# LDAP Query Builder
