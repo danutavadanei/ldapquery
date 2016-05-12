@@ -69,7 +69,7 @@ Output:
 LdapQuery requires composer to install
 
 ```sh
-$ composer require ldapquery/builder dev-master
+$ composer require avadaneidanut/querybuilder dev-master
 ```
 
 ### Development
