@@ -3,7 +3,7 @@
 LDAP Query Builder is simple tool for easily generate queries for LDAP filtering. Quick example:
 
 ```php
-$query = (new \LdapQuery\Builder)->where('attrBar', 'value')
+$query = \LdapQuery\Builder::create()->where('attrBar', 'value')
     ->andWhere('!attrFoo', 'value2')
     ->orWhere('attrBaz', [1, 2, 3, 4, 5, 6, 7, 8, 9])
     ->andWhere(function($builder) {
@@ -23,13 +23,13 @@ If you want to examine queries generated and don't manually separate groups  jus
 
 ```php
 $builder = new \LdapQuery\Builder;
-$query = $builder->where('attrBar', 'value')
+$builder->where('attrBar', 'value')
     ->andWhere('!attrFoo', 'value2')
     ->orWhere('attrBaz', [1, 2, 3, 4, 5, 6, 7, 8, 9])
     ->andWhere(function($builder) {
         $builder->where('bla', 'bla2')
             ->orWhere('bla3', 'bla1');
-    })->__toString();
+    });
 
 $builder->prettify(); # will generate a nice output
 ```
