@@ -66,7 +66,7 @@ Output:
 
 ### Installation
 
-Dillinger requires composer to install
+LdapQuery requires composer to install
 
 ```sh
 $ composer require ldapquery/builder dev-master
