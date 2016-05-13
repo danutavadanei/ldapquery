@@ -33,7 +33,7 @@ class Builder
 	{
 		return new Builder;
 	}
-
+	
 	/**
 	 * Add a where clause to the LDAP Query
 	 * 
@@ -48,9 +48,81 @@ class Builder
 	 */
 	public function where($attribute, $operator = null, $value = null, $logical = '&')
 	{
+		$value = ldap_escape($value, null, LDAP_ESCAPE_FILTER);
+		return $this->whereRaw($attribute, $operator, $value, $logical);
+	}
+	
+	/**
+	 * Add a where clause to the LDAP Query
+	 * 
+	 * @param  string|\Closure   $attribute
+	 * @param  string|array|null $operator
+	 * @param  string|array|null $value
+	 * @param  string            $logical
+	 *
+	 * @return $this
+	 *
+	 * @throws \LdapQuery\Exceptions\GrammarException
+	 */
+	public function whereBegins($attribute, $operator = null, $value = null, $logical = '&')
+	{
+		$value = ldap_escape($value, null, LDAP_ESCAPE_FILTER) . '*';
+		return $this->whereRaw($attribute, $operator, $value, $logical);
+	}
+	
+	/**
+	 * Add a where clause to the LDAP Query
+	 * 
+	 * @param  string|\Closure   $attribute
+	 * @param  string|array|null $operator
+	 * @param  string|array|null $value
+	 * @param  string            $logical
+	 *
+	 * @return $this
+	 *
+	 * @throws \LdapQuery\Exceptions\GrammarException
+	 */
+	public function whereEnds($attribute, $operator = null, $value = null, $logical = '&')
+	{
+		$value = '*' . ldap_escape($value, null, LDAP_ESCAPE_FILTER);
+		return $this->whereRaw($attribute, $operator, $value, $logical);
+	}
+	
+	/**
+	 * Add a where clause to the LDAP Query
+	 * 
+	 * @param  string|\Closure   $attribute
+	 * @param  string|array|null $operator
+	 * @param  string|array|null $value
+	 * @param  string            $logical
+	 *
+	 * @return $this
+	 *
+	 * @throws \LdapQuery\Exceptions\GrammarException
+	 */
+	public function whereLike($attribute, $operator = null, $value = null, $logical = '&')
+	{
+		$value = '*' . ldap_escape($value, null, LDAP_ESCAPE_FILTER) . '*';
+		return $this->whereRaw($attribute, $operator, $value, $logical);
+	}
+
+	/**
+	 * Add an unescaped where clause to the LDAP Query
+	 * 
+	 * @param  string|\Closure   $attribute
+	 * @param  string|array|null $operator
+	 * @param  string|array|null $value
+	 * @param  string            $logical
+	 *
+	 * @return $this
+	 *
+	 * @throws \LdapQuery\Exceptions\GrammarException
+	 */
+	public function whereRaw($attribute, $operator = null, $value = null, $logical = '&')
+	{
 		// If the current group operator is different from the requested
 		// spawn a new group and nest the current one
-		if ($this->group->getOperator() !== $logical){
+		if ($this->group->getOperator() !== $logical) {
 			$group = new FilterGroup($logical);
 
 			if (count($group->getFilters()) === 1) {
