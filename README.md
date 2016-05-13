@@ -63,6 +63,24 @@ Output:
 )
 ```
 
+Usage with sympfony ldap component:
+```php
+use LdapQuery\BuilderFacade;
+use Symfony\Component\Ldap\LdapClient;
+
+$client = new LdapClient('ldap.example.com');
+$client->bind('uid=AB1234,ou=people,o=world', 'secretpassword');
+
+$details = $client->find(
+    'ou=people,o=world',
+    (string)BuilderFacade::where('uid', 'AB123*')->andWhere('cn', '~=','*Danut*'),
+    ['uid','cn','mail','office','mobile']
+);
+```
+
+### Note
+
+Please keep in mind that all attributes or values will not be LDAP escaped. You have to do that manually.
 
 ### Installation
 
