@@ -87,7 +87,7 @@ Please keep in mind that all attributes or values will not be LDAP escaped. You 
 LdapQuery requires composer to install
 
 ```sh
-$ composer require avadaneidanut/querybuilder dev-master
+$ composer require avadaneidanut/ldapquery dev-master
 ```
 
 ### Development
