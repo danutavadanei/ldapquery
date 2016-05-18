@@ -6,13 +6,13 @@ LDAP Query Builder is simple tool for easily generate queries for LDAP filtering
 
 ```php
 $query = \LdapQuery\Builder::create()->where('attrBar', 'value')
-    ->andWhere('attrFoo', '<>' 'value2')
+    ->where('attrFoo', '<>' 'value2')
     ->orWhere('attrBaz', [1, 2, 3, 4, 5, 6, 7, 8, 9])
-    ->andWhere(function($builder) {
+    ->where(function($builder) {
         $builder->where('bla', 'bla2')
             ->orWhere('bla3', 'bla1');
     })
-    ->__toString()
+    ->stringify()
 ;
 ```
 
@@ -26,14 +26,14 @@ If you want to examine queries generated and don't manually separate groups  jus
 ```php
 $builder = new \LdapQuery\Builder;
 $builder->where('attrBar', 'value')
-    ->andWhere('attrFoo', '<>' 'value2')
+    ->where('attrFoo', '<>' 'value2')
     ->orWhere('attrBaz', [1, 2, 3, 4, 5, 6, 7, 8, 9])
-    ->andWhere(function($builder) {
+    ->where(function($builder) {
         $builder->where('bla', 'bla2')
             ->orWhere('bla3', 'bla1');
     });
 
-$builder->prettify(); # will generate a nice output
+$builder->toArray(); # will generate a nice output
 ```
 
 Output:
@@ -67,22 +67,125 @@ Output:
 
 Usage with sympfony ldap component:
 ```php
-use LdapQuery\BuilderFacade;
+use LdapQuery\Builder;
 use Symfony\Component\Ldap\LdapClient;
 
 $client = new LdapClient('ldap.example.com');
 $client->bind('uid=AB1234,ou=people,o=world', 'secretpassword');
 
+$builder = new Builder;
+
 $details = $client->find(
     'ou=people,o=world',
-    (string)BuilderFacade::where('uid', 'AB123*')->andWhere('cn', '~=','*Danut*'),
+    (string)$builder->where('uid', 'AB123*')->where('cn', '~=','*Danut*'),
     ['uid','cn','mail','office','mobile']
 );
 ```
 
-### Note
+### Available methods on Builder class
 
-Please keep in mind that all attributes or values will not be LDAP escaped. You have to do that manually.
+```php
+/**
+ * Add a where clause to the LDAP Query. Defaulted to & logical, acts like a andWhere.
+ * 
+ * @param  string|Closure    $attribute
+ * @param  string|array|null $operator
+ * @param  string|array|null $value
+ * @param  string|null       $wildcard
+ * @param  bool              $escape
+ * @param  string            $logical
+ *
+ * @return $this
+ *
+ * @throws GrammarException
+ */
+public function where($attribute, $operator = null, $value = null, $wildcard = null, $escape = true, $negation = false, $logical = '&');
+    
+/**
+ * Add a or where clause to the LDAP Query.
+ * 
+ * @param  string|Closure   $attribute
+ * @param  string|array|null $operator
+ * @param  string|array|null $value
+ * @param  string|null       $wildcard
+ * @param  bool              $escape
+ *
+ * @return $this
+ *
+ * @throws GrammarException
+ */
+public function orWhere($attribute, $operator = null, $value = null, $wildcard = null, $escape = true, $negation = false);
+
+/**
+ * Convert Group object to a string, LDAP valid query group.
+ * 
+ * @return string
+ */
+public function stringify();
+
+/**
+ * Convert Builder object to array.
+ * 
+ * @return array
+ */
+public function toArray();
+```
+
+### Dynamic where clauses
+LdapQuery\Builder class has plenty dynamic "where clauses" that are transformed automatically calls to "where" or "orWhere" methods with arguments translatted from method name. This can be used as any other method example:
+```php
+$builder->orWhereBegins('attribute', 'value'); will be translated in
+$builder->orWhere('attribute', 'value', null, 'begins', true);
+```
+Available Dynamic where clauses
+```php
+// whereRaw - unescaped where
+$builder->whereRaw('foo', 'bar*');
+print $builder; # (foo=bar*)
+
+// orWhereRaw - unescaped or where
+$builder->where('foo', 'bar')
+    ->orWhereRaw('foo', 'baz*'); 
+print $builder; // (|(foo=bar)(foo=baz*))
+```
+```php
+// whereNot - negation
+$builder->whereNot('foo', 'bar');
+print $builder; // (!(foo=bar))
+
+// whereNotRaw - unescaped negation
+$builder->whereNotRaw('foo', 'bar*');
+print $builder; // (!(foo=bar*))
+```
+
+And many other (I will add description asap):
+```
+orWhereNotRaw 
+whereBegins
+whereBeginsRaw
+whereBeginsNot
+whereBeginsNotRaw
+orWhereBegins
+orWhereBeginsRaw
+orWhereBeginsNot
+orWhereBeginsNotRaw
+whereEnds
+whereEndsRaw
+whereEndsNot
+whereEndsNotRaw
+orWhereEnds
+orWhereEndsRaw
+orWhereEndsNot
+orWhereEndsNotRaw
+whereLike
+whereLikeRaw
+whereLikeNot
+whereLikeNotRaw
+orWhereLike
+orWhereLikeRaw
+orWhereLikeNot
+orWhereLikeNotRaw
+```
 
 ### Installation
 
