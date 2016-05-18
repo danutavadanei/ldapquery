@@ -6,7 +6,3 @@ php:
   - 7.0
 
 script: phpunit
-
-branches:
-  only:
-    - master
