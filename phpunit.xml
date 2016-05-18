@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+         syntaxCheck="false">
+  <testsuites>
+    <testsuite name="filter">
+      <file>tests/Filter/FilterTest.php</file>
+      <file>tests/Filter/FilterFactoryTest.php</file>
+    </testsuite>
+    <testsuite name="group">
+      <file>tests/Group/GroupTest.php</file>
+      <file>tests/Group/GroupFactoryTest.php</file>
+    </testsuite>
+    <testsuite name="builder">
+      <file>tests/BuilderTest.php</file>
+    </testsuite>
+  </testsuites>
+</phpunit>
