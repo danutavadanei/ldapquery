@@ -1,6 +1,6 @@
 # LDAP Query Builder
 
-[![Latest Stable Version](https://poser.pugx.org/avadaneidanut/ldapquery/v/stable)](https://packagist.org/packages/avadaneidanut/ldapquery) [![Total Downloads](https://poser.pugx.org/avadaneidanut/ldapquery/downloads)](https://packagist.org/packages/avadaneidanut/ldapquery) [![Latest Unstable Version](https://poser.pugx.org/avadaneidanut/ldapquery/v/unstable)](https://packagist.org/packages/avadaneidanut/ldapquery) [![License](https://poser.pugx.org/avadaneidanut/ldapquery/license)](https://packagist.org/packages/avadaneidanut/ldapquery)
+[![Latest Stable Version](https://poser.pugx.org/avadaneidanut/ldapquery/v/stable)](https://packagist.org/packages/avadaneidanut/ldapquery) [![Total Downloads](https://poser.pugx.org/avadaneidanut/ldapquery/downloads)](https://packagist.org/packages/avadaneidanut/ldapquery) [![Latest Unstable Version](https://poser.pugx.org/avadaneidanut/ldapquery/v/unstable)](https://packagist.org/packages/avadaneidanut/ldapquery) [![License](https://poser.pugx.org/avadaneidanut/ldapquery/license)](https://packagist.org/packages/avadaneidanut/ldapquery) [![Build Status](https://travis-ci.org/avadaneidanut/ldapquery.svg?branch=master)](https://travis-ci.org/avadaneidanut/ldapquery)
 
 LDAP Query Builder is simple tool for easily generate queries for LDAP filtering. Quick example:
 
