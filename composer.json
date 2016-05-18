@@ -1,6 +1,16 @@
 {
     "name": "avadaneidanut/ldapquery",
-    "description": "Easily build LDAP filter queries.",
+    "type": "library",
+    "description": "A light weight package for easily building LDAP advanced filter queries.",
+    "keywords": [
+        "active directory",
+        "ldap",
+        "ldapquery",
+        "ldap query",
+        "windows",
+        "windows server",
+        "ldap filters"
+    ],
     "authors": [
         {
             "name": "Avadanei Danut",
