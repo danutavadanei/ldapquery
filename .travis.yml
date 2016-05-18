@@ -10,4 +10,3 @@ script: phpunit
 branches:
   only:
     - master
-    - v1.0.0
