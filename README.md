@@ -139,52 +139,142 @@ $builder->orWhere('attribute', 'value', null, 'begins', true);
 ```
 Available Dynamic where clauses
 ```php
-// whereRaw - unescaped where
+// whereRaw - where attribute unescaped value
 $builder->whereRaw('foo', 'bar*');
-print $builder; # (foo=bar*)
+print $builder; // (foo=bar*)
 
-// orWhereRaw - unescaped or where
+// orWhereRaw - or where attribute unescaped value
 $builder->where('foo', 'bar')
     ->orWhereRaw('foo', 'baz*'); 
 print $builder; // (|(foo=bar)(foo=baz*))
 ```
 ```php
-// whereNot - negation
+// whereNot - where attribute not value
 $builder->whereNot('foo', 'bar');
 print $builder; // (!(foo=bar))
 
-// whereNotRaw - unescaped negation
+// whereNotRaw - where attribute not unescaped value
 $builder->whereNotRaw('foo', 'bar*');
 print $builder; // (!(foo=bar*))
+
+// orWhereNotRaw - or where attribute not unescaped value
+$builder->where('foo', 'bar')
+  ->orWhereNotRaw('foo', 'baz*');
+print $builder;  // (|(foo=bar)(!(foo=baz*)))
 ```
 
-And many other (I will add description asap):
+```php
+// whereBegins - where attribute begins with value
+$buidler->whereBegins('foo', 'b'); 
+print $builder; // (foo=b*)
+
+// whereBeginsRaw - where attribute begins with unescaped value
+$builder->whereBeginsRaw('foo', 'b)');
+print $builder; // (foo=b)*)
+
+// whereBeginsNot - where attribute not begins with value
+$builder->whereNotBegins('foo', 'b');
+print $builder; // (!(foo=b*))
+
+// whereBeginsNotRaw - where attribute not begins with unescaped value
+$builder->whereNotBeginsRaw('foo', 'b()');
+print $builder; // (!(foo=b()*))
+
+// orWhereBegins - or where attribute begins with value
+$builder->where('foo', 'bar')
+    ->orWhereBegins('foo', 'b');
+print $builder; // (|(foo=bar)(foo=b*))
+
+// orWhereBeginsRaw - or where attribute begins with unescaped value
+$builder->where('foo', 'bar')
+    ->orWhereBeginsRaw('foo', 'b()');
+print $builder; // (|(foo=bar)(foo=b()*))
+
+// orWhereBeginsNot - or where attribute not begins with value
+$builder->where('foo', 'bar')
+    ->orWhereBeginsNot('foo', 'b');
+print $builder; // (|(foo=bar)(!(foo=b*)))
+
+// orWhereBeginsNotRaw - or where attribute not begins with unescaped value
+$builder->where('foo', 'bar')
+    ->orWhereBeginsNotRaw('foo', 'b()');
+print $builder; // (|(foo=bar)(!(foo=b()*)))
 ```
-orWhereNotRaw 
-whereBegins
-whereBeginsRaw
-whereBeginsNot
-whereBeginsNotRaw
-orWhereBegins
-orWhereBeginsRaw
-orWhereBeginsNot
-orWhereBeginsNotRaw
-whereEnds
-whereEndsRaw
-whereEndsNot
-whereEndsNotRaw
-orWhereEnds
-orWhereEndsRaw
-orWhereEndsNot
-orWhereEndsNotRaw
-whereLike
-whereLikeRaw
-whereLikeNot
-whereLikeNotRaw
-orWhereLike
-orWhereLikeRaw
-orWhereLikeNot
-orWhereLikeNotRaw
+
+```php
+// whereEnds - where attribute ends with value
+$buidler->whereEnds('foo', 'b'); 
+print $builder; // (foo=*b)
+
+// whereEndsRaw - where attribute ends with unescaped value
+$builder->whereEndsRaw('foo', 'b)');
+print $builder; // (foo=*b))
+
+// whereEndsNot - where attribute not ends with value
+$builder->whereNotEnds('foo', 'b');
+print $builder; // (!(foo=*b))
+
+// whereEndsNotRaw - where attribute not ends with unescaped value
+$builder->whereNotEndsRaw('foo', 'b()');
+print $builder; // (!(foo=*b()))
+
+// orWhereEnds - or where attribute ends with value
+$builder->where('foo', 'bar')
+    ->orWhereEnds('foo', 'b');
+print $builder; // (|(foo=bar)(foo=*b))
+
+// orWhereEndsRaw - or where attribute ends with unescaped value
+$builder->where('foo', 'bar')
+    ->orWhereEndsRaw('foo', 'b()');
+print $builder; // (|(foo=bar)(foo=*b()))
+
+// orWhereEndsNot - or where attribute not ends with value
+$builder->where('foo', 'bar')
+    ->orWhereEndsNot('foo', 'b');
+print $builder; // (|(foo=bar)(!(foo=*b)))
+
+// orWhereEndsNotRaw - or where attribute not ends with unescaped value
+$builder->where('foo', 'bar')
+    ->orWhereEndsNotRaw('foo', 'b()');
+print $builder; // (|(foo=bar)(!(foo=*b())))
+```
+
+```php
+// whereLike - where attribute like value
+$buidler->whereLike('foo', 'b'); 
+print $builder; // (foo=*b*)
+
+// whereLikeRaw - where attribute like unescaped value
+$builder->whereLikeRaw('foo', 'b)');
+print $builder; // (foo=*b)*)
+
+// whereLikeNot - where attribute not like value
+$builder->whereNotLike('foo', 'b');
+print $builder; // (!(foo=*b*))
+
+// whereLikeNotRaw - where attribute not like unescaped value
+$builder->whereNotLikeRaw('foo', 'b()');
+print $builder; // (!(foo=*b()*))
+
+// orWhereLike - or where attribute like value
+$builder->where('foo', 'bar')
+    ->orWhereLike('foo', 'b');
+print $builder; // (|(foo=bar)(foo=*b*))
+
+// orWhereLikeRaw - or where attribute like unescaped value
+$builder->where('foo', 'bar')
+    ->orWhereLikeRaw('foo', 'b()');
+print $builder; // (|(foo=bar)(foo=*b()*))
+
+// orWhereLikeNot - or where attribute not like value
+$builder->where('foo', 'bar')
+    ->orWhereLikeNot('foo', 'b');
+print $builder; // (|(foo=bar)(!(foo=*b*)))
+
+// orWhereLikeNotRaw - or where attribute not like unescaped value
+$builder->where('foo', 'bar')
+    ->orWhereLikeNotRaw('foo', 'b()');
+print $builder; // (|(foo=bar)(!(foo=*b()*)))
 ```
 
 ### Installation
