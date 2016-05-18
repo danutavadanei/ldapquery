@@ -282,7 +282,7 @@ print $builder; // (|(foo=bar)(!(foo=*b()*)))
 LdapQuery requires composer to install
 
 ```sh
-$ composer require avadaneidanut/ldapquery dev-master
+$ composer require avadaneidanut/ldapquery
 ```
 
 ### Development
