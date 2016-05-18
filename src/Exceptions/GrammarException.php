@@ -2,6 +2,8 @@
 
 namespace LdapQuery\Exceptions;
 
-class GrammarException extends \Exception
-{
+use Exception;
+
+class GrammarException extends Exception
+{  
 }
